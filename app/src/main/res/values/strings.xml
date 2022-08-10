@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">University app</string>
+    <string name="main">Главная</string>
+    <string name="news">Новости</string>
+    <string name="taechers">Сотрудники</string>
+    <string name="tvMain">Главная</string>
+    <string name="tvNews">Новости</string>
+    <string name="tvTaechers">Сотрудники</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

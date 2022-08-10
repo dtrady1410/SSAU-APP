@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/main"
+        android:icon="@drawable/home"
+        android:orderInCategory="1"
+        android:title="@string/main" />
+    <item
+        android:id="@+id/news"
+        android:icon="@drawable/news"
+        android:orderInCategory="2"
+        android:title="@string/news" />
+    <item
+        android:id="@+id/teachers"
+        android:icon="@drawable/taechers"
+        android:orderInCategory="3"
+        android:title="@string/taechers" />
+</menu>
