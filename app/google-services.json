@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "75647199859",
+    "firebase_url": "https://ssau-7ad36-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "ssau-7ad36",
+    "storage_bucket": "ssau-7ad36.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:75647199859:android:0784789fd1af387b9e5806",
+        "android_client_info": {
+          "package_name": "com.example.ssauapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "75647199859-r73mnct3rp1n0gsn58khlqb0i2qrtqb8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ssauapp",
+            "certificate_hash": "87bd8234fe66b9473415d7cea4067896b5525176"
+          }
+        },
+        {
+          "client_id": "75647199859-q2igvp1cmihaagoj8mmucgcgo5hasrik.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjcfaydZm6NAN0OfCm0VCYSp-jbgfJnZU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "75647199859-q2igvp1cmihaagoj8mmucgcgo5hasrik.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
