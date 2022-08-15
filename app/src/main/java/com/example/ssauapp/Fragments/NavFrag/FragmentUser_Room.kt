@@ -32,7 +32,7 @@ class FragmentUser_Room : Fragment() {
     override fun onStart() {
         AUTH = FirebaseAuth.getInstance()
         super.onStart()
-        binding.exitBtn.setOnClickListener{
+        binding.logouttBtn.setOnClickListener{
             exitFun()
         }
     }

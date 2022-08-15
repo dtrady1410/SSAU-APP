@@ -24,12 +24,16 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.btnMain -> {
                     getFragment(R.id.vp, FragmentLenta.newInstance())
+                    binding.toolbar.title = getString(R.string.main_page)
+
                 }
                 R.id.btnOthers -> {
                     getFragment(R.id.vp, FragmentOthers.newInstance())
+                    binding.toolbar.title = getString(R.string.others)
                 }
                 R.id.btnUser -> {
                     getFragment(R.id.vp, FragmentUser_Room.newInstance())
+                    binding.toolbar.title = getString(R.string.ProfileTitle)
                 }
             }
             true

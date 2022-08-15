@@ -11,4 +11,11 @@
     <string name="welcome_message">Добро пожаловать</string>
     <string name="ProfileTitle">Личный Кабинет</string>
     <string name="LogOut">Выйти</string>
+    <string name="name_opt_profile">Имя</string>
+    <string name="username_profile_title">Danny Taylor</string>
+    <string name="toast_enter_code_successful">Успешно</string>
+    <string name="FirstNameEdit">Введите имя</string>
+    <string name="lastNameEdit">Введите фамилию</string>
+    <string name="CompleteChanges_btn">Готово</string>
+    <string name="UserInfoErrorToast">Заполните все поля</string>
 </resources>
