@@ -11,4 +11,37 @@
     <string name="welcome_message">Добро пожаловать</string>
     <string name="ProfileTitle">Личный Кабинет</string>
     <string name="LogOut">Выйти</string>
+    <string name="name_opt_profile">Имя</string>
+    <string name="username_profile_title">Danny Taylor</string>
+    <string name="toast_enter_code_successful">Успешно</string>
+    <string name="FirstNameEdit">Введите имя</string>
+    <string name="lastNameEdit">Введите фамилию</string>
+    <string name="CompleteChanges_btn">Готово</string>
+    <string name="UserInfoErrorToast">Заполните все поля</string>
+    <string name="Default_Profile_Name">Имя Фамилия</string>
+    <string name="Profile_Surname">Фамилия</string>
+    <string name="Profile_Faculty">Факультет</string>
+    <string name="LogOutBtnTxt">Выйти</string>
+    <string name="myAchievements">Мое портфолио</string>
+    <string name="editProfileInfo">Редактировать данные</string>
+    <string name="Edit_User_Params_Tost_Input_Error">Поля должын быть заполнены</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="CheckStudent">Учащийся</string>
+    <string name="CheckOrg">Организатор</string>
+    <string name="checkboxReg_Error">Не правильно указан вид деятельности</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 </resources>

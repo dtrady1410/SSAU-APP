@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.example.ssauapp.HelpFun.makeToast
 import com.example.ssauapp.MainActivity
 import com.example.ssauapp.R
 import com.example.ssauapp.RegisterActivity
@@ -47,15 +48,11 @@ class EnterPhoneNumber : Fragment(R.layout.fragment_enter_phone_number) {
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
                 mAuth.signInWithCredential(credential).addOnCompleteListener{
                     if(it.isSuccessful){
-                        Toast.makeText(activity,getString(R.string.welcome_message),
-                            Toast.LENGTH_SHORT )
-                            .show()
+                        makeToast(getString(R.string.welcome_message))
                         (activity as RegisterActivity).finish()
                         startActivity(intnet)
                     } else{
-                        Toast.makeText(activity,it?.exception?.message.toString(),
-                            Toast.LENGTH_SHORT )
-                            .show()
+                        makeToast(it?.exception?.message.toString())
                     }
                 }
             }
@@ -77,9 +74,7 @@ class EnterPhoneNumber : Fragment(R.layout.fragment_enter_phone_number) {
 
     private fun checkFunction() {
         if(binding.editPhone.text.toString().isEmpty()){
-            Toast.makeText(activity,
-                getString(R.string.toast_phone_enter),
-                Toast.LENGTH_LONG).show()
+            makeToast(getString(R.string.toast_phone_enter))
         } else{
             authUser()
         }

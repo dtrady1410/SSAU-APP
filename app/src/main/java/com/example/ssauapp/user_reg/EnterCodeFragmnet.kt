@@ -4,12 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import com.example.ssauapp.HelpFun.makeToast
 import com.example.ssauapp.MainActivity
 import com.example.ssauapp.R
 import com.example.ssauapp.RegisterActivity
@@ -19,6 +20,7 @@ import com.google.firebase.auth.PhoneAuthProvider
 
 class EnterCodeFragmnet(val id: String, val mPhoneNumber: String) : Fragment(R.layout.fragment_enter_code_fragmnet) {
     lateinit var binding: FragmentEnterCodeFragmnetBinding
+    lateinit var fragmnetManager: FragmentManager
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,28 +48,27 @@ class EnterCodeFragmnet(val id: String, val mPhoneNumber: String) : Fragment(R.l
     }
 
     private fun enterCode() {
-        val intent = Intent(activity as RegisterActivity, MainActivity::class.java)
         val code = binding.editCode.text.toString()
         val credential = PhoneAuthProvider.getCredential(id, code)
+        val intent = Intent(activity as RegisterActivity, MainActivity::class.java)
         AUTH.signInWithCredential(credential)
             .addOnCompleteListener{task ->
             if(task.isSuccessful){
                 val uid = AUTH.currentUser?.uid.toString()
                 val date_map = mutableMapOf<String, Any>()
                 date_map[CHILD_ID] = uid
-                date_map[CHILD_PHONE]  = mPhoneNumber
-                date_map[CHIlD_USERNAME] = uid
+                date_map[CHILD_PHONE] = mPhoneNumber
                 FIREBASE_REALTIME_DATABASE.child(NODE_USERS).child(uid).updateChildren(date_map)
-                    .addOnCompleteListener{task2 ->
-                        if(task2.isSuccessful){
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
                             (activity as RegisterActivity).finish()
                             startActivity(intent)
-                            Toast.makeText(activity, R.string.welcome_message, Toast.LENGTH_SHORT).show()
-                        }else{
-                            Toast.makeText(activity, task2?.exception.toString(), Toast.LENGTH_SHORT).show()
+                            makeToast(getString(R.string.toast_enter_code_successful))
+                        } else {
+                            makeToast(task.exception.toString())
                         }
-                }
-            }else{
+                    }
+            }else {
                 Toast.makeText(activity, task?.exception.toString(), Toast.LENGTH_SHORT).show()
             }
         }
