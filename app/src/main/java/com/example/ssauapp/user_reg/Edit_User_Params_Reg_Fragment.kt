@@ -7,16 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
+import com.example.ssauapp.HelpFun.makeToast
 import com.example.ssauapp.MainActivity
 import com.example.ssauapp.R
-import com.example.ssauapp.RegisterActivity
 import com.example.ssauapp.Utilits.*
 import com.example.ssauapp.databinding.FragmentEditUserParamsRegBinding
-import com.example.ssauapp.databinding.FragmentUserRoomBinding
-import com.google.firebase.auth.PhoneAuthProvider
 
-class Edit_User_Params_Reg_Fragment(val id: String, val mPhoneNumber: String) : Fragment() {
+class Edit_User_Params_Reg_Fragment() : Fragment() {
     lateinit var binding: FragmentEditUserParamsRegBinding
+    lateinit var fragmnetManager: FragmentManager
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -25,44 +25,35 @@ class Edit_User_Params_Reg_Fragment(val id: String, val mPhoneNumber: String) : 
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
+        (activity as MainActivity).binding.toolbar. visibility = View.GONE
+        (activity as MainActivity).binding.navBottom.visibility = View.GONE
         binding.CreateAccountBtn.setOnClickListener{
-            create_account()
+            editUserInfo()
         }
     }
 
-    private fun create_account() {
-        val uid = AUTH.currentUser?.uid.toString()
-        val date_map = mutableMapOf<String, Any>()
-        val intent = Intent(activity as RegisterActivity, MainActivity::class.java)
-        if (!(binding.FirstNameEdit.text.isEmpty() && binding.LastNameEdit.text.isEmpty())) {
-            date_map[CHILD_ID] = uid
-            date_map[CHILD_PHONE] = mPhoneNumber
-            date_map[CHIlD_FIRSTNAME] = binding.FirstNameEdit.text.toString()
-            date_map[CHILD_LASTNAME] = binding.LastNameEdit.text.toString()
-            FIREBASE_REALTIME_DATABASE.child(NODE_USERS).child(uid).updateChildren(date_map)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        (activity as RegisterActivity).finish()
-                        startActivity(intent)
-                        makeToast(
-                            activity as RegisterActivity,
-                            getString(R.string.welcome_message),
-                            Toast.LENGTH_SHORT
-                        )
-                    } else {
-                        makeToast(
-                            activity as RegisterActivity,
-                            task.exception.toString(),
-                            Toast.LENGTH_SHORT
-                        )
+    private fun editUserInfo() = with(binding){
+        fragmnetManager = (activity as MainActivity).supportFragmentManager
+        val name = FirstNameEdit.text.toString()
+        val surname = LastNameEdit.text.toString()
+        if(name.isEmpty() || surname.isEmpty()){
+            makeToast(getString(R.string.Edit_User_Params_Tost_Input_Error))
+        }else{
+            val fullname = "$name $surname"
+            FIREBASE_REALTIME_DATABASE.child(NODE_USERS).child(UID).child(CHIlD_FULLNAME)
+                .setValue(fullname).addOnCompleteListener {it ->
+                    if(it.isSuccessful){
+                        makeToast(getString(R.string.toast_enter_code_successful),)
+                        User.name = fullname
+                        fragmnetManager.beginTransaction()
+                            .replace(R.id.vp, RoleCheckFragment())
+                            .commit()
+                    }else{
+                        makeToast(it.exception.toString())
                     }
                 }
-        }else{
-            makeToast(activity as RegisterActivity,
-                getString(R.string.UserInfoErrorToast),
-                Toast.LENGTH_SHORT)
         }
     }
 }

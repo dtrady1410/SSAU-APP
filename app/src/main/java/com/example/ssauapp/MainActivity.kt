@@ -3,13 +3,15 @@ package com.example.ssauapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.ssauapp.Fragments.NavFrag.FragmentLenta
 import com.example.ssauapp.Fragments.NavFrag.FragmentOthers
 import com.example.ssauapp.Fragments.NavFrag.FragmentUser_Room
-import com.example.ssauapp.Utilits.AUTH
-import com.example.ssauapp.Utilits.initFirebase
+import com.example.ssauapp.Utilits.*
+import com.example.ssauapp.data_class.User_Data
 import com.example.ssauapp.databinding.ActivityMainBinding
+import com.example.ssauapp.user_reg.Edit_User_Params_Reg_Fragment
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
@@ -38,10 +40,6 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
         InitFields()
         InitFunc()
     }
@@ -52,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun InitFunc(){
         if(AUTH.currentUser!=null){
-            getFragment(R.id.vp, FragmentLenta.newInstance())
+            InitUser()
         }
         else {
             val intent  = Intent(this, RegisterActivity::class.java)
@@ -62,5 +60,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun getFragment(vp: Int, fr: Fragment){
         supportFragmentManager.beginTransaction().replace(vp, fr).commit()
+    }
+
+    private fun InitUser(){
+        FIREBASE_REALTIME_DATABASE.child(NODE_USERS).child(UID)
+            .addListenerForSingleValueEvent(AppValueEvent{
+            User = it.getValue(User_Data::class.java) ?: User_Data()
+            if(User.name.isEmpty()){
+                getFragment(R.id.vp, Edit_User_Params_Reg_Fragment())
+            }else{
+                getFragment(R.id.vp, FragmentLenta.newInstance())
+            }
+        })
     }
 }

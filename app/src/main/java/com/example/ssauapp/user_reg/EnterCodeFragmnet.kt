@@ -10,11 +10,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.example.ssauapp.HelpFun.makeToast
 import com.example.ssauapp.MainActivity
 import com.example.ssauapp.R
 import com.example.ssauapp.RegisterActivity
-import com.example.ssauapp.Utilits.AUTH
-import com.example.ssauapp.Utilits.makeToast
+import com.example.ssauapp.Utilits.*
 import com.example.ssauapp.databinding.FragmentEnterCodeFragmnetBinding
 import com.google.firebase.auth.PhoneAuthProvider
 
@@ -54,21 +54,21 @@ class EnterCodeFragmnet(val id: String, val mPhoneNumber: String) : Fragment(R.l
         AUTH.signInWithCredential(credential)
             .addOnCompleteListener{task ->
             if(task.isSuccessful){
-                val user = task.result.user
-                val creationTimestamp = user?.metadata?.creationTimestamp
-                val lastSignInTimestamp= user?.metadata?.lastSignInTimestamp
-                if (creationTimestamp==lastSignInTimestamp){
-                    makeToast(activity as RegisterActivity, getString(R.string.toast_enter_code_successful), Toast.LENGTH_SHORT)
-                    fragmnetManager = (activity as RegisterActivity).supportFragmentManager
-                    fragmnetManager
-                        .beginTransaction()
-                        .replace(R.id.vp_reg, Edit_User_Params_Reg_Fragment(id, mPhoneNumber))
-                        .commit()
-                }else{
-                    (activity as RegisterActivity).finish()
-                    startActivity(intent)
-                }
-            }else{
+                val uid = AUTH.currentUser?.uid.toString()
+                val date_map = mutableMapOf<String, Any>()
+                date_map[CHILD_ID] = uid
+                date_map[CHILD_PHONE] = mPhoneNumber
+                FIREBASE_REALTIME_DATABASE.child(NODE_USERS).child(uid).updateChildren(date_map)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            (activity as RegisterActivity).finish()
+                            startActivity(intent)
+                            makeToast(getString(R.string.toast_enter_code_successful))
+                        } else {
+                            makeToast(task.exception.toString())
+                        }
+                    }
+            }else {
                 Toast.makeText(activity, task?.exception.toString(), Toast.LENGTH_SHORT).show()
             }
         }
